@@ -1,21 +1,55 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Trirong:wght@400;700&display=swap" rel="stylesheet">
+  <title>Interactive Map | Yellowstone</title>
+  <script 
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCr06XgFmTqX-jyP99kNQQb57yOzlE10Wg&callback=initMap" 
+    async 
+    defer>
+  </script>
+  <script src="googleapi.js"></script>
+</head>
+<body>
+  <header>
+    <nav id="main-nav">
+      <ul>
+        <li><a href="index.html">Resume</a></li>
+        <li><a href="chase.html">Chase</a></li>
+        <li><a href="bff.html">bff</a></li>
+        <li><a href="googlemaps.html">Map</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section id="map-container">
+      <div id="map" style="height: 400px; width: 100%;"></div>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2024 Yellowstone Explorer. All rights reserved.</p>
+  </footer>
+  <script>
+    let map;
+    let mainMarker;
+    let infoWindow;
     function initMap() {
       const mapCenter = { lat: 44.429, lng: -110.584 };
-
       // Initialize the map
       map = new google.maps.Map(document.getElementById("map"), {
         center: mapCenter,
         zoom: 8,
         mapTypeId: "roadmap", // Makes the map user-friendly
       });
-
       // Main marker at Yellowstone's center
       mainMarker = new google.maps.Marker({
         position: mapCenter,
         map: map,
         title: "Yellowstone National Park",
       });
-
       // Info window for main marker
       infoWindow = new google.maps.InfoWindow({
         content: `
@@ -25,12 +59,10 @@
           </div>
         `,
       });
-
       // Show info window on marker click
       mainMarker.addListener("click", () => {
         infoWindow.open(map, mainMarker);
       });
-
       // Add a new marker when the user clicks on the map
       map.addListener("click", (event) => {
         const newMarker = new google.maps.Marker({
@@ -38,12 +70,10 @@
           map: map,
           title: "New Marker",
         });
-
         // Optional: Attach an info window to the new marker
         const newInfoWindow = new google.maps.InfoWindow({
           content: `<p>Lat: ${event.latLng.lat().toFixed(4)}, Lng: ${event.latLng.lng().toFixed(4)}</p>`,
         });
-
         newMarker.addListener("click", () => {
           newInfoWindow.open(map, newMarker);
         });

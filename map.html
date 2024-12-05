@@ -1,0 +1,54 @@
+
+    function initMap() {
+      const mapCenter = { lat: 44.429, lng: -110.584 };
+
+      // Initialize the map
+      map = new google.maps.Map(document.getElementById("map"), {
+        center: mapCenter,
+        zoom: 8,
+        mapTypeId: "roadmap", // Makes the map user-friendly
+      });
+
+      // Main marker at Yellowstone's center
+      mainMarker = new google.maps.Marker({
+        position: mapCenter,
+        map: map,
+        title: "Yellowstone National Park",
+      });
+
+      // Info window for main marker
+      infoWindow = new google.maps.InfoWindow({
+        content: `
+          <div style="font-family: 'Trirong', sans-serif;">
+            <h3 style="margin: 0; color: #264653;">Yellowstone National Park</h3>
+            <p style="margin: 0; font-size: 14px;">Explore the beauty of nature!</p>
+          </div>
+        `,
+      });
+
+      // Show info window on marker click
+      mainMarker.addListener("click", () => {
+        infoWindow.open(map, mainMarker);
+      });
+
+      // Add a new marker when the user clicks on the map
+      map.addListener("click", (event) => {
+        const newMarker = new google.maps.Marker({
+          position: event.latLng,
+          map: map,
+          title: "New Marker",
+        });
+
+        // Optional: Attach an info window to the new marker
+        const newInfoWindow = new google.maps.InfoWindow({
+          content: `<p>Lat: ${event.latLng.lat().toFixed(4)}, Lng: ${event.latLng.lng().toFixed(4)}</p>`,
+        });
+
+        newMarker.addListener("click", () => {
+          newInfoWindow.open(map, newMarker);
+        });
+      });
+    }
+  </script>
+</body>
+</html>

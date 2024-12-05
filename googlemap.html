@@ -4,81 +4,61 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Trirong:wght@400;700&display=swap" rel="stylesheet">
-  <title>Interactive Map | Yellowstone</title>
-  <script 
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCr06XgFmTqX-jyP99kNQQb57yOzlE10Wg&callback=initMap" 
-    async 
-    defer>
-  </script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
+  <title>Google Maps API</title>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCr06XgFmTqX-jyP99kNQQb57yOzlE10Wg&loading=async&callback=initMap" async defer></script>
   <script src="googleapi.js"></script>
 </head>
-<body>
-  <header>
-    <nav id="main-nav">
-      <ul>
-        <li><a href="index.html">Resume</a></li>
-        <li><a href="chase.html">Chase</a></li>
-        <li><a href="bff.html">bff</a></li>
-        <li><a href="googlemaps.html">Map</a></li>
-      </ul>
-    </nav>
-  </header>
-  <main>
-    <section id="map-container">
-      <div id="map" style="height: 400px; width: 100%;"></div>
-    </section>
-  </main>
-  <footer>
-    <p>&copy; 2024 Yellowstone Explorer. All rights reserved.</p>
-  </footer>
+<body id="main">
+  <nav id="main-nav">
+  <ul>
+    <li><a href="index.html" >Resume</a></li>
+    <li><a href="gearlist.html" >Gear List</a></li>
+    <li><a href="tour_guide.html" >Yellowstone Sights</a></li>
+    <li><a href="googlemaps.html" >Map</a></li>
+  </ul>
+  </nav>
+  <div id="map" style="height: 400px; width: 100%; text-align: center; "></div>
   <script>
     let map;
-    let mainMarker;
+    let marker;
     let infoWindow;
+
+
     function initMap() {
-      const mapCenter = { lat: 44.429, lng: -110.584 };
-      // Initialize the map
-      map = new google.maps.Map(document.getElementById("map"), {
-        center: mapCenter,
-        zoom: 8,
-        mapTypeId: "roadmap", // Makes the map user-friendly
-      });
-      // Main marker at Yellowstone's center
-      mainMarker = new google.maps.Marker({
-        position: mapCenter,
+  
+    const center = { lat: 44.429, lng: -110.584 }; 
+
+    map = new google.maps.Map(document.getElementById("map"), {
+      center: center,
+      zoom: 8,
+    });
+
+    marker = new google.maps.Marker({
+      position: { lat: 44.429, lng: -110.584 }, 
+      map: map,
+      title: "This is a custom marker",
+    });
+  
+    infoWindow = new google.maps.InfoWindow({
+      content: "<h3>Yellowstone National Park</h3>",
+    });
+
+    marker.addListener("click", () => {
+      infoWindow.open(map, marker);
+    });
+
+    google.maps.event.addListener(map, "click", function (event) {
+      const clickedLocation = event.latLng;
+
+      new google.maps.Marker({
+        position: clickedLocation,
         map: map,
-        title: "Yellowstone National Park",
+        title: "New Marker",
       });
-      // Info window for main marker
-      infoWindow = new google.maps.InfoWindow({
-        content: `
-          <div style="font-family: 'Trirong', sans-serif;">
-            <h3 style="margin: 0; color: #264653;">Yellowstone National Park</h3>
-            <p style="margin: 0; font-size: 14px;">Explore the beauty of nature!</p>
-          </div>
-        `,
-      });
-      // Show info window on marker click
-      mainMarker.addListener("click", () => {
-        infoWindow.open(map, mainMarker);
-      });
-      // Add a new marker when the user clicks on the map
-      map.addListener("click", (event) => {
-        const newMarker = new google.maps.Marker({
-          position: event.latLng,
-          map: map,
-          title: "New Marker",
-        });
-        // Optional: Attach an info window to the new marker
-        const newInfoWindow = new google.maps.InfoWindow({
-          content: `<p>Lat: ${event.latLng.lat().toFixed(4)}, Lng: ${event.latLng.lng().toFixed(4)}</p>`,
-        });
-        newMarker.addListener("click", () => {
-          newInfoWindow.open(map, newMarker);
-        });
-      });
-    }
+    });
+  }
+  google.maps.event.addDomListener(window,'load',initMap);
   </script>
 </body>
 </html>

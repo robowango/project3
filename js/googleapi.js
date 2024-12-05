@@ -67,4 +67,4 @@ function createMarker(location) {
   newMarker.addListener("click", () => {
     newInfoWindow.open(map, newMarker);
   });
-}
+} 

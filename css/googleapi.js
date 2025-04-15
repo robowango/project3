@@ -5,7 +5,7 @@ let infoWindow;
 function initMap() {
   // Map Center Coordinates
   const center = { lat: 44.429, lng: -110.584 };
-
+ 
   // Initialize Map
   map = new google.maps.Map(document.getElementById("map"), {
     center: center,

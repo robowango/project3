@@ -9,6 +9,49 @@ body {
   min-height: 100vh; /* Ensure the page takes up at least the full viewport height */
 }
 
+@media (min-width: 768px) {
+  body {
+    font-size: 17px;
+    padding: 20px;
+  }
+
+  header {
+    text-align: center;
+  }
+
+  nav {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+  }
+
+  .content {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+
+/* Small laptop view: 900px and up */
+@media (min-width: 900px) {
+  body {
+    max-width: 960px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+  }
+
+  .sidebar {
+    display: block;
+    background-color: #ddddd;
+    padding: 10px;
+    margin-top: 20px;
+  }
+
+  footer {
+    text-align: right;
+    padding: 10px;
+  }
+}
+
 .playball-regular {
   font-family: "Playball", helvetica;
   font-weight: 400;
